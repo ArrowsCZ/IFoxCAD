@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 public class TestPointEx
 {

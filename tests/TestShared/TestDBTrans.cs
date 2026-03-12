@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 public class TestTrans
 {
@@ -33,10 +33,7 @@ public class TestTrans
         var doc = Acaop.DocumentManager.MdiActiveDocument;
         return doc;
     }
-    
-    
-    
-    
+
     [CommandMethod(nameof(CmdTest_DBTransActiveOpenDwg), CommandFlags.Session)]
     public static void CmdTest_DBTransActiveOpenDwg()
     {
@@ -49,11 +46,14 @@ public class TestTrans
         using DBTrans tr = new();
 
         // 泛型扩展(用变量名来使用它)
-        tr.BlockTable.ForEach(action: (id) => {
-            //Debugger.Break();// 为什么cad工程不能断点进入呢?
-            id.Print();
-            Console.WriteLine(id);
-        });
+        tr.BlockTable.ForEach(
+            action: (id) =>
+            {
+                //Debugger.Break();// 为什么cad工程不能断点进入呢?
+                id.Print();
+                Console.WriteLine(id);
+            }
+        );
 
         //tr.BlockTable.ForEach(asdad);
         //void asdad(object id)
@@ -61,40 +61,58 @@ public class TestTrans
         //    id.Print();
         //}
 
-        tr.BlockTable.ForEach(action: (id) => {
-            id.Print();
-        });
-        tr.BlockTable.ForEach(action: (id, state, index) => {
-            id.Print();
-        });
+        tr.BlockTable.ForEach(
+            action: (id) =>
+            {
+                id.Print();
+            }
+        );
+        tr.BlockTable.ForEach(
+            action: (id, state, index) =>
+            {
+                id.Print();
+            }
+        );
 
         // 符号表扩展(会顶替泛型扩展)
-        tr.BlockTable.ForEach((btr) => { // 预处理设置不进入ForEach函数体内
-            btr.Print();// 此处可以设置断点
-        }, OpenMode.ForRead, checkIdOk: true);
-        tr.BlockTable.ForEach((btr, state) => {// 预处理设置不进入ForEach函数体内
-            btr.Print();// 此处可以设置断点
-        }, OpenMode.ForRead, checkIdOk: true);
-        tr.BlockTable.ForEach((btr, state, index) => { // 预处理设置不进入ForEach函数体内
-            btr.Print();// 此处可以设置断点
-        }, OpenMode.ForRead, checkIdOk: true);
+        tr.BlockTable.ForEach(
+            (btr) =>
+            { // 预处理设置不进入ForEach函数体内
+                btr.Print(); // 此处可以设置断点
+            }
+        );
+        tr.BlockTable.ForEach(
+            (btr, state) =>
+            { // 预处理设置不进入ForEach函数体内
+                btr.Print(); // 此处可以设置断点
+            }
+        );
+        tr.BlockTable.ForEach(
+            (btr, state, index) =>
+            { // 预处理设置不进入ForEach函数体内
+                btr.Print(); // 此处可以设置断点
+            }
+        );
 
         // 修改:此处有缺陷:cad08会获取已经删除的块表记录,需要检查id.IsOk(),用ForEach代替
         // tr.BlockTable.Change("块表记录", btr => {
         // });
 
         // 修改:此处无缺陷
-        tr.BlockTable.Change(tr.ModelSpace.ObjectId, modelSpace => { // 特性设置不进入函数体内
-            var ents = modelSpace.GetEntities<Entity>();  // 此处不会检查id.IsOk()
+        tr.BlockTable.Change(
+            tr.ModelSpace.ObjectId,
+            modelSpace =>
+            { // 特性设置不进入函数体内
+                var ents = modelSpace.GetEntities<Entity>(); // 此处不会检查id.IsOk()
 
-            modelSpace.ForEach(id => {  // 利用遍历检查id.IsOk()
-                if (id.IsOk())
-                    id.Print();
-            });
-        });
+                modelSpace.ForEach(id =>
+                { // 利用遍历检查id.IsOk()
+                    if (id.IsOk())
+                        id.Print();
+                });
+            }
+        );
     }
-
-
 
     // 后台:不存在路径的dwg会在桌面进行临时保存
     [CommandMethod(nameof(FileNotExist))]
@@ -123,7 +141,6 @@ public class TestTrans
         tr2.Database.SaveFile(saveAsFile: "D:\\");
     }
 
-
     [CommandMethod(nameof(Test_SaveDwgFile))]
     public void Test_SaveDwgFile()
     {
@@ -134,6 +151,7 @@ public class TestTrans
         // tr.Database.SaveAs(filename,DwgVersion.Current);
         tr.Database.SaveDwgFile();
     }
+
     [CommandMethod(nameof(Test_DBTransAbort))]
     public void Test_DBTransAbort()
     {
@@ -165,7 +183,6 @@ public class TestTrans
     //    tr.ModelSpace.AddCircle(new Point3d(0, 0, 0), 20);
     // }
 
-
     [CommandMethod(nameof(Test_TopTransaction))]
     public void Test_TopTransaction()
     {
@@ -176,28 +193,25 @@ public class TestTrans
         using DBTrans tr2 = new();
         var tr3 = HostApplicationServices.WorkingDatabase.TransactionManager.TopTransaction;
         var tr6 = Acaop.DocumentManager.MdiActiveDocument.TransactionManager.TopTransaction;
-        Env.Print(tr2.Transaction == tr3);
-        Env.Print(tr3 == tr6);
+        (tr2.Transaction == tr3).Print();
+        (tr3 == tr6).Print();
         using DBTrans tr4 = new();
         var tr5 = HostApplicationServices.WorkingDatabase.TransactionManager.TopTransaction;
         var tr7 = Acaop.DocumentManager.MdiActiveDocument.TransactionManager.TopTransaction;
-        Env.Print(tr4.Transaction == tr5);
-        Env.Print(tr5 == tr7);
+        (tr4.Transaction == tr5).Print();
+        (tr5 == tr7).Print();
         var trm = HostApplicationServices.WorkingDatabase.TransactionManager;
-
     }
 
     [CommandMethod(nameof(Test_DBTrans_BlockCount))]
     public void Test_DBTrans_BlockCount()
     {
         using var tr = new DBTrans();
-        var i = tr.CurrentSpace
-            .GetEntities<BlockReference>()
+        var i = tr
+            .CurrentSpace.GetEntities<BlockReference>()
             .Where(ent => ent.GetBlockName() == "自定义块");
-            
-        var block = i.ToList()[0];
-        Env.Print(i.Count());
-    }
 
-    
+        var block = i.ToList()[0];
+        i.Count().Print();
+    }
 }

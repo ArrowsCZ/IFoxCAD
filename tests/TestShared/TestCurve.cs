@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 public class TestGraph
 {
@@ -16,9 +16,9 @@ public class TestGraph
             { pt2, 2 },
             { pt3, 3 },
             { pt4, 4 },
-            { pt5, 5 }
+            { pt5, 5 },
         };
-        Env.Print(dict[pt1]);
+        dict[pt1].Print();
     }
 
 #if false
@@ -81,24 +81,21 @@ public class TestGraph
 #endif
 }
 
-
-
 public partial class TestCurve
 {
     [CommandMethod(nameof(Test_CurveExtend))]
     public void Test_CurveExtend()
     {
-        using var tr =  new DBTrans();
+        using var tr = new DBTrans();
         var ent = Env.Editor.GetEntity("pick curve").ObjectId.GetObject<Entity>();
         if (ent is Curve curve)
             curve.ForWrite(e => e.Extend(e.EndParam + 1));
-
     }
-
 
     private Arc ToArc1(CircularArc2d a2d)
     {
-        double startangle, endangle;
+        double startangle,
+            endangle;
         double refangle = a2d.ReferenceVector.Angle;
 
         if (a2d.IsClockWise)
@@ -112,15 +109,14 @@ public partial class TestCurve
             endangle = a2d.EndAngle + refangle;
         }
 
-        return
-            new Arc(
-                new Point3d(new Plane(), a2d.Center),
-                Vector3d.ZAxis,
-                a2d.Radius,
-                startangle,
-                endangle);
+        return new Arc(
+            new Point3d(new Plane(), a2d.Center),
+            Vector3d.ZAxis,
+            a2d.Radius,
+            startangle,
+            endangle
+        );
     }
-
 
 #if false
     [CommandMethod(nameof(Test_Curve_ToArc))]
@@ -258,7 +254,6 @@ arc2的db: 起点角度：277.644556524148  ,终点角度：  65.124147107524
 #endif
 }
 
-
 public partial class TestCurve
 {
     [CommandMethod(nameof(Test_BreakCurve))]
@@ -268,7 +263,7 @@ public partial class TestCurve
         var ents = Env.Editor.SSGet()?.Value.GetEntities<Curve>();
         if (ents is null)
             return;
-        var tt = CurveEx.BreakCurve(ents.ToList()!);
+        var tt = ents.ToList()!.BreakCurve();
         tt.ForEach(t => t.ForWrite(e => e.ColorIndex = 1));
         tr.CurrentSpace.AddEntity(tt);
     }
@@ -277,9 +272,11 @@ public partial class TestCurve
     public void Test_CurveCurveIntersector3d()
     {
         using DBTrans tr = new();
-        var ents = Env.Editor.SSGet()?
-            .Value.GetEntities<Curve>()
-            .Select(e => e?.ToCompositeCurve3d()).ToList();
+        var ents = Env
+            .Editor.SSGet()
+            ?.Value.GetEntities<Curve>()
+            .Select(e => e?.ToCompositeCurve3d())
+            .ToList();
         if (ents == null)
             return;
 
@@ -297,11 +294,11 @@ public partial class TestCurve
                 cci3d.Set(gc1, gc2, int1, int2, Vector3d.ZAxis);
                 var d = cci3d.OverlapCount();
                 var a = cci3d.GetIntersectionRanges();
-                Env.Print($"{a[0].LowerBound}-{a[0].UpperBound} and {a[1].LowerBound}-{a[1].UpperBound}");
+                $"{a[0].LowerBound}-{a[0].UpperBound} and {a[1].LowerBound}-{a[1].UpperBound}".Print();
                 for (int m = 0; m < d; m++)
                 {
                     var b = cci3d.GetOverlapRanges(m);
-                    Env.Print($"{b[0].LowerBound}-{b[0].UpperBound} and {b[1].LowerBound}-{b[1].UpperBound}");
+                    $"{b[0].LowerBound}-{b[0].UpperBound} and {b[1].LowerBound}-{b[1].UpperBound}".Print();
                 }
 
                 for (int k = 0; k < cci3d.NumberOfIntersectionPoints; k++)
@@ -313,7 +310,7 @@ public partial class TestCurve
                     // var e = cci3d.OverlapDirection();
                     var pt = cci3d.GetIntersectionParameters(k);
                     var pts = cci3d.GetIntersectionPoint(k);
-                    Env.Print(pts);
+                    pts.Print();
                 }
             }
         }

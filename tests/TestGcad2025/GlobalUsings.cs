@@ -1,4 +1,4 @@
-﻿/// 系统引用
+﻿// 系统引用
 global using System;
 global using System.Collections;
 global using System.Collections.Generic;
@@ -42,8 +42,8 @@ global using Cad_DxfFiler = Gssoft.Gscad.DatabaseServices.DxfFiler;
 global using Cad_ErrorStatus = Gssoft.Gscad.Runtime.ErrorStatus;
 
 
-/// ifoxcad
+// ifoxcad
 global using IFoxCAD.Cad;
 global using IFoxCAD.Basal;
 
-global using Test;
+global using IFoxTest;

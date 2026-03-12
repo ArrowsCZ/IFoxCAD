@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 public class TestLoop
 {
     [CommandMethod(nameof(Test_LoopList))]
@@ -14,12 +14,12 @@ public class TestLoop
             5
         };
 
-        Env.Print(loop);
+        loop.Print();
 
         loop.SetFirst(loop.Last!);
-        Env.Print(loop);
-        Env.Print(loop.Min());
+        loop.Print();
+        loop.Min().Print();
         loop.SetFirst(new LoopListNode<int>(loop.Min(), loop));
-        Env.Print(loop);
+        loop.Print();
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace TestShared;
+﻿namespace IFoxTest;
 public static class TestSingleKeyWordHook
 {
-    [CommandMethod(nameof(TestSingleKeyWordHookDemo))]
-    public static void TestSingleKeyWordHookDemo()
+    [CommandMethod(nameof(Test_SingleKeyWordHookDemo))]
+    public static void Test_SingleKeyWordHookDemo()
     {
         var line1 = new Line(Point3d.Origin, new Point3d(100, 100, 0));
         line1.SetDatabaseDefaults();

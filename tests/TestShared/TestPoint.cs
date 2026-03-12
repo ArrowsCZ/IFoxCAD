@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 public class TestPoint
 {
 #if false
@@ -22,10 +22,10 @@ public class TestPoint
     {
         var pts = new Point2dCollection
         {
-            new(0, 0),
-            new(0, 1),
-            new(1, 1),
-            new(1, 0)
+            new Point2d(0, 0),
+            new Point2d(0, 1),
+            new Point2d(1, 1),
+            new Point2d(1, 0)
         };
 
 
@@ -42,10 +42,10 @@ public class TestPoint
         Env.Printl("--------");
         var ptss = new Point3dCollection
         {
-            new(0, 0,0),
-            new(0, 1,0),
-            new(1, 1,0),
-            new(1, 0,0)
+            new Point3d(0, 0,0),
+            new Point3d(0, 1,0),
+            new Point3d(1, 1,0),
+            new Point3d(1, 0,0)
         };
         
         foreach (Point3d pt in ptss)
@@ -108,44 +108,44 @@ public class TestPoint
     [CommandMethod(nameof(Test_Point3dHash))]
     public void Test_Point3dHash()
     {
-        Env.Print($"4位小数的hash：{new Point3d(0.0_001, 0.0_002, 0.0).GetHashCode()}");
-        Env.Print($"5位小数的hash：{new Point3d(0.00_001, 0.00_002, 0.0).GetHashCode()}");
-        Env.Print($"6位小数的hash：{new Point3d(0.000_001, 0.000_002, 0.0).GetHashCode()}");
-        Env.Print($"7位小数的hash：{new Point3d(0.000_0_001, 0.000_0_002, 0.0).GetHashCode()}");
-        Env.Print($"8位小数的hash：{new Point3d(0.000_00_001, 0.000_00_002, 0.0).GetHashCode()}");
-        Env.Print($"9位小数的hash：{new Point3d(0.000_000_001, 0.000_000_002, 0.0).GetHashCode()}");
-        Env.Print($"10位小数的hash：{new Point3d(0.000_000_0001, 0.000_000_0002, 0.0).GetHashCode()}");
-        Env.Print($"10位小数的hash：{new Point3d(0.000_000_0001, 0.000_000_0001, 0.0).GetHashCode()}");
+        $"4位小数的hash：{new Point3d(0.0_001, 0.0_002, 0.0).GetHashCode()}".Print();
+        $"5位小数的hash：{new Point3d(0.00_001, 0.00_002, 0.0).GetHashCode()}".Print();
+        $"6位小数的hash：{new Point3d(0.000_001, 0.000_002, 0.0).GetHashCode()}".Print();
+        $"7位小数的hash：{new Point3d(0.000_0_001, 0.000_0_002, 0.0).GetHashCode()}".Print();
+        $"8位小数的hash：{new Point3d(0.000_00_001, 0.000_00_002, 0.0).GetHashCode()}".Print();
+        $"9位小数的hash：{new Point3d(0.000_000_001, 0.000_000_002, 0.0).GetHashCode()}".Print();
+        $"10位小数的hash：{new Point3d(0.000_000_0001, 0.000_000_0002, 0.0).GetHashCode()}".Print();
+        $"10位小数的hash：{new Point3d(0.000_000_0001, 0.000_000_0001, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"11位小数的hash：{new Point3d(0.000_000_000_01, 0.000_000_000_02, 0.0).GetHashCode()}");
-        Env.Print($"11位小数的hash：{new Point3d(0.000_000_000_01, 0.000_000_000_01, 0.0).GetHashCode()}");
+        $"11位小数的hash：{new Point3d(0.000_000_000_01, 0.000_000_000_02, 0.0).GetHashCode()}".Print();
+        $"11位小数的hash：{new Point3d(0.000_000_000_01, 0.000_000_000_01, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"12位小数的hash：{new Point3d(0.000_000_000_001, 0.000_000_000_002, 0.0).GetHashCode()}");
-        Env.Print($"12位小数的hash：{new Point3d(0.000_000_000_001, 0.000_000_000_001, 0.0).GetHashCode()}");
+        $"12位小数的hash：{new Point3d(0.000_000_000_001, 0.000_000_000_002, 0.0).GetHashCode()}".Print();
+        $"12位小数的hash：{new Point3d(0.000_000_000_001, 0.000_000_000_001, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"13位小数的hash：{new Point3d(0.000_000_000_0001, 0.000_000_000_0002, 0.0).GetHashCode()}");
-        Env.Print($"13位小数的hash：{new Point3d(0.000_000_000_0001, 0.000_000_000_0001, 0.0).GetHashCode()}");
+        $"13位小数的hash：{new Point3d(0.000_000_000_0001, 0.000_000_000_0002, 0.0).GetHashCode()}".Print();
+        $"13位小数的hash：{new Point3d(0.000_000_000_0001, 0.000_000_000_0001, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"14位小数的hash：{new Point3d(0.000_000_000_000_01, 0.000_000_000_000_02, 0.0).GetHashCode()}");
-        Env.Print($"14位小数的hash：{new Point3d(0.000_000_000_000_01, 0.000_000_000_000_01, 0.0).GetHashCode()}");
+        $"14位小数的hash：{new Point3d(0.000_000_000_000_01, 0.000_000_000_000_02, 0.0).GetHashCode()}".Print();
+        $"14位小数的hash：{new Point3d(0.000_000_000_000_01, 0.000_000_000_000_01, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"15位小数的hash：{new Point3d(0.000_000_000_000_001, 0.000_000_000_000_002, 0.0).GetHashCode()}");
-        Env.Print($"15位小数的hash：{new Point3d(0.000_000_000_000_001, 0.000_000_000_000_001, 0.0).GetHashCode()}");
+        $"15位小数的hash：{new Point3d(0.000_000_000_000_001, 0.000_000_000_000_002, 0.0).GetHashCode()}".Print();
+        $"15位小数的hash：{new Point3d(0.000_000_000_000_001, 0.000_000_000_000_001, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"16位小数的hash：{new Point3d(0.000_000_000_000_000_1, 0.000_000_000_000_000_2, 0.0).GetHashCode()}");
-        Env.Print($"16位小数的hash：{new Point3d(0.000_000_000_000_000_1, 0.000_000_000_000_000_1, 0.0).GetHashCode()}");
+        $"16位小数的hash：{new Point3d(0.000_000_000_000_000_1, 0.000_000_000_000_000_2, 0.0).GetHashCode()}".Print();
+        $"16位小数的hash：{new Point3d(0.000_000_000_000_000_1, 0.000_000_000_000_000_1, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"17位小数的hash：{new Point3d(0.000_000_000_000_000_01, 0.000_000_000_000_000_02, 0.0).GetHashCode()}");
-        Env.Print($"17位小数的hash：{new Point3d(0.000_000_000_000_000_01, 0.000_000_000_000_000_01, 0.0).GetHashCode()}");
+        $"17位小数的hash：{new Point3d(0.000_000_000_000_000_01, 0.000_000_000_000_000_02, 0.0).GetHashCode()}".Print();
+        $"17位小数的hash：{new Point3d(0.000_000_000_000_000_01, 0.000_000_000_000_000_01, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"18位小数的hash：{new Point3d(0.000_000_000_000_000_001, 0.000_000_000_000_000_002, 0.0).GetHashCode()}");
-        Env.Print($"18位小数的hash：{new Point3d(0.000_000_000_000_000_001, 0.000_000_000_000_000_001, 0.0).GetHashCode()}");
+        $"18位小数的hash：{new Point3d(0.000_000_000_000_000_001, 0.000_000_000_000_000_002, 0.0).GetHashCode()}".Print();
+        $"18位小数的hash：{new Point3d(0.000_000_000_000_000_001, 0.000_000_000_000_000_001, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"19位小数的hash：{new Point3d(0.000_000_000_000_000_000_1, 0.000_000_000_000_000_000_2, 0.0).GetHashCode()}");
-        Env.Print($"19位小数的hash：{new Point3d(0.000_000_000_000_000_000_1, 0.000_000_000_000_000_000_1, 0.0).GetHashCode()}");
+        $"19位小数的hash：{new Point3d(0.000_000_000_000_000_000_1, 0.000_000_000_000_000_000_2, 0.0).GetHashCode()}".Print();
+        $"19位小数的hash：{new Point3d(0.000_000_000_000_000_000_1, 0.000_000_000_000_000_000_1, 0.0).GetHashCode()}".Print();
 
-        Env.Print($"20位小数的hash：{new Point3d(0.000_000_000_000_000_000_01, 0.000_000_000_000_000_000_02, 0.0).GetHashCode()}");
-        Env.Print($"20位小数的hash：{new Point3d(0.000_000_000_000_000_000_01, 0.000_000_000_000_000_000_01, 0.0).GetHashCode()}");
+        $"20位小数的hash：{new Point3d(0.000_000_000_000_000_000_01, 0.000_000_000_000_000_000_02, 0.0).GetHashCode()}".Print();
+        $"20位小数的hash：{new Point3d(0.000_000_000_000_000_000_01, 0.000_000_000_000_000_000_01, 0.0).GetHashCode()}".Print();
     }
 
     [CommandMethod(nameof(Test_ListEqualspeed))]

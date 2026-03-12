@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 public class MirrorFile
 {
@@ -14,22 +14,25 @@ public class MirrorFile
     {
         var yaxis = new Point3d(0, 1, 0);
         using DBTrans tr = new(file, fileOpenMode: FileOpenMode.OpenForReadAndReadShare);
-        tr.BlockTable.Change(tr.ModelSpace.ObjectId, modelSpace => {
-            modelSpace.ForEach(entId => {
-                var dbText = tr.GetObject<DBText>(entId, OpenMode.ForRead)!;
-                if (dbText is null)
-                    return;
+        tr.BlockTable.Change(
+            tr.ModelSpace.ObjectId,
+            modelSpace =>
+            {
+                modelSpace.ForEach(entId =>
+                {
+                    var dbText = tr.GetObject<DBText>(entId)!;
 
-                dbText.UpgradeOpen();
-                var pos = dbText.Position;
-                // text.Move(pos, Point3d.Origin);
-                // Y轴
-                dbText.Mirror(Point3d.Origin, yaxis);
-                // text.Move(Point3d.Origin, pos);
-                dbText.DowngradeOpen();
-            });
-        });
-        var ver = (DwgVersion)27;/*AC1021 AutoCAD 2007/2008/2009.*/
+                    dbText.UpgradeOpen();
+                    var pos = dbText.Position;
+                    // text.Move(pos, Point3d.Origin);
+                    // Y轴
+                    dbText.Mirror(Point3d.Origin, yaxis);
+                    // text.Move(Point3d.Origin, pos);
+                    dbText.DowngradeOpen();
+                });
+            }
+        );
+        var ver = (DwgVersion)27; /*AC1021 AutoCAD 2007/2008/2009.*/
         tr.Database.SaveAs(fileSave, ver);
     }
 
@@ -42,32 +45,41 @@ public class MirrorFile
     {
         using DBTrans tr = new(file);
 
-        tr.Task(() => {
+        tr.Task(() =>
+        {
             var yaxis = new Point3d(0, 1, 0);
-            tr.BlockTable.Change(tr.ModelSpace.ObjectId, modelSpace => {
-                modelSpace.ForEach(entId => {
-                    var entity = tr.GetObject<Entity>(entId, OpenMode.ForWrite)!;
-                    if (entity is DBText dbText)
+            tr.BlockTable.Change(
+                tr.ModelSpace.ObjectId,
+                modelSpace =>
+                {
+                    modelSpace.ForEach(entId =>
                     {
-                        dbText.Mirror(Point3d.Origin, yaxis);
-                        dbText.IsMirroredInX = true;   // 这句将导致文字偏移
-
-                        // 指定文字的垂直对齐方式
-                        if (dbText.VerticalMode == TextVerticalMode.TextBase)
-                            dbText.VerticalMode = TextVerticalMode.TextBottom;
-
-                        // 指定文字的水平对齐方式
-                        dbText.HorizontalMode = dbText.HorizontalMode switch
+                        var entity = tr.GetObject<Entity>(entId, OpenMode.ForWrite)!;
+                        if (entity is DBText dbText)
                         {
-                            TextHorizontalMode.TextLeft => TextHorizontalMode.TextRight,
-                            TextHorizontalMode.TextRight => TextHorizontalMode.TextLeft,
-                            _ => dbText.HorizontalMode
-                        };
-                        dbText.AdjustAlignment(tr.Database);
-                    }
-                });
-            });
+                            dbText.Mirror(Point3d.Origin, yaxis);
+                            dbText.IsMirroredInX = true; // 这句将导致文字偏移
+
+                            // 指定文字的垂直对齐方式
+                            if (dbText.VerticalMode == TextVerticalMode.TextBase)
+                                dbText.VerticalMode = TextVerticalMode.TextBottom;
+
+                            // 指定文字的水平对齐方式
+                            dbText.HorizontalMode = dbText.HorizontalMode switch
+                            {
+                                TextHorizontalMode.TextLeft => TextHorizontalMode.TextRight,
+                                TextHorizontalMode.TextRight => TextHorizontalMode.TextLeft,
+                                _ => dbText.HorizontalMode,
+                            };
+                            dbText.AdjustAlignment(tr.Database);
+                        }
+                    });
+                }
+            );
         });
-        tr.Database.SaveAs(fileSave, (DwgVersion)27 /*AC1021 AutoCAD 2007/2008/2009.*/);
+        tr.Database.SaveAs(
+            fileSave,
+            (DwgVersion)27 /*AC1021 AutoCAD 2007/2008/2009.*/
+        );
     }
 }

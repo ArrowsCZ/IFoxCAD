@@ -1,27 +1,25 @@
-﻿
-
-namespace TestShared
+﻿namespace TestShared
 {
-    public static class TestDBobject
+    public static class TestDbObject
     {
-        [CommandMethod(nameof(TestForWrite))]
-        public static void TestForWrite()
+        [CommandMethod(nameof(Test_ForWrite))]
+        public static void Test_ForWrite()
         {
             using var tr = new DBTrans();
             var ent = Env.Editor.GetEntity("\npick entity");
-            if (ent.Status is not PromptStatus.OK) return;
-            var entid = ent.ObjectId.GetObject<Entity>()!;
-            Tools.TestTimes3(100000, "using:", i => {
-                using (entid.ForWrite())
+            if (ent.Status is not PromptStatus.OK)
+                return;
+            var entId = ent.ObjectId.GetObject<Entity>()!;
+            Tools.TestTimes3(
+                100000,
+                "using:",
+                i =>
                 {
-                    entid.ColorIndex = i % 7;
+                    using (entId.ForWrite())
+                        entId.ColorIndex = i % 7;
                 }
-            });
-            Tools.TestTimes3(100000, "action:", i => {
-                entid.ForWrite(e => {
-                    e.ColorIndex = i % 7;
-                });
-            });
+            );
+            Tools.TestTimes3(100000, "action:", i => entId.ForWrite(e => e.ColorIndex = i % 7));
         }
     }
 }

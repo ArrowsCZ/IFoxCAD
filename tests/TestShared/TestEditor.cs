@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 public class Testeditor
 {
@@ -16,7 +16,7 @@ public class Testeditor
         var res1 = EditorEx.GetLines(pts, true);
         var res2 = pts.Select(pt => new TypedValue((int)LispDataType.Point2d, pt)).ToList();
 
-        Editor ed = Acap.DocumentManager.MdiActiveDocument.Editor;
+        Editor ed = Acaop.DocumentManager.MdiActiveDocument.Editor;
         var pt = ed.GetPoint("qudiam", new Point3d(0, 0, 0));
         var d = ed.GetDouble("qudoule");
         var i = ed.GetInteger("quint");
@@ -47,12 +47,12 @@ public class Testeditor
     [CommandMethod(nameof(Test_Zoom_1))]
     public void Test_Zoom_1()
     {
-        Env.Editor.Zoom(new(0, 0, 0),200,200);
+        Env.Editor.Zoom(new Point3d(0, 0, 0),200,200);
     }
     [CommandMethod(nameof(Test_Zoom_2))]
     public void Test_Zoom_2()
     {
-        Env.Editor.ZoomWindow(new Point3d(-100,-100,0),new(100,100,0));
+        Env.Editor.ZoomWindow(new Point3d(-100,-100,0),new Point3d(100,100,0));
     }
 
     [CommandMethod(nameof(Test_Ssget))]
@@ -61,13 +61,13 @@ public class Testeditor
 
         var keyword = new Dictionary<string, (string, Action)>
         {
-            { "D", ("你好",  () => { Env.Print("this is c"); }) },
-            { "B", ("hello", () => { Env.Print("this is b"); }) }
+            { "D", ("你好",  () => { "this is c".Print(); }) },
+            { "B", ("hello", () => { "this is b".Print(); }) }
         };
 
         var ss = Env.Editor.SSGet(/*":S", */ messages: ("get", "del" ),
                                          keywords: keyword);
-        Env.Print(ss!);
+        ss!.Print();
     }
 
     [CommandMethod(nameof(Test_ExportWMF), CommandFlags.Modal | CommandFlags.UsePickSet)]
