@@ -2,8 +2,8 @@
 
 public static class TestBubbleWindow
 {
-    [CommandMethod(nameof(TestBubbleWindow))]
-    public static void Run()
+    [CommandMethod(nameof(Test_BubbleWindow))]
+    public static void Test_BubbleWindow()
     {
         IFoxUtils.ShowBubbleWindow(5, "测试", "测试");
     }

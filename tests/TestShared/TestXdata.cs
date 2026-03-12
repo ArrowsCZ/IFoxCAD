@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 public class TestXdata
 {
@@ -38,7 +38,7 @@ public class TestXdata
                 }
         };
 
-        var line1 = new Line(new(0, 0, 0), new(2, 0, 0));
+        var line1 = new Line(new Point3d(0, 0, 0), new Point3d(2, 0, 0));
         line1.XData = new XDataList()
         {
             { DxfCode.ExtendedDataRegAppName, "myapp1" }, // 可以用dxfcode和int表示组码

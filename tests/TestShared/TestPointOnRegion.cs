@@ -2,8 +2,8 @@
 
 public static class TestPointOnRegion
 {
-    [CommandMethod(nameof(TestPointOnRegionCommand))]
-    public static void TestPointOnRegionCommand()
+    [CommandMethod(nameof(Test_PointOnRegionCommand))]
+    public static void Test_PointOnRegionCommand()
     {
         var r1 = Env.Editor.GetEntity("\n选择多段线");
         if (r1.Status != PromptStatus.OK)

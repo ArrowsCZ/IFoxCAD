@@ -1,5 +1,4 @@
-﻿
-namespace Test;
+﻿namespace IFoxTest;
 
 public partial class Test
 {
@@ -53,10 +52,7 @@ public partial class Test
     [CommandMethod(nameof(Test_JigExTransentDim))]
     public static void Test_JigExTransentDim()
     {
-        PromptPointOptions ppo = new("")
-        {
-            AppendKeywordsToMessage = false,
-        };
+        PromptPointOptions ppo = new("") { AppendKeywordsToMessage = false };
         List<Point3d> pts = new();
         for (int i = 0; i < 3; i++)
         {
@@ -70,7 +66,7 @@ public partial class Test
         using DBTrans tr = new();
 
         using RotatedDimension dimension = new();
-        dimension.SetDatabaseDefaults();// cad16没有这个不显示
+        dimension.SetDatabaseDefaults(); // cad16没有这个不显示
         dimension.Rotation = 0;
         dimension.XLine1Point = pts[0];
         dimension.XLine2Point = pts[1];

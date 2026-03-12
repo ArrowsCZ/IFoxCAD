@@ -1,6 +1,4 @@
-﻿
-
-namespace Test;
+﻿namespace IFoxTest;
 
 /*
 // 测试例子,同时验证两个计时器
@@ -28,14 +26,17 @@ public class Timer
         /// 秒
         /// </summary>
         Second,
+
         /// <summary>
         /// 毫秒
         /// </summary>
         Millisecond,
+
         /// <summary>
         /// 微秒
         /// </summary>
         Microsecond,
+
         /// <summary>
         /// 纳秒
         /// </summary>
@@ -56,8 +57,10 @@ public class Timer
     [DllImport("Kernel32.dll")]
     private static extern bool QueryPerformanceFrequency(out long lpFrequency);
 
-    private long _startTime, _stopTime;
+    private long _startTime,
+        _stopTime;
     private readonly long _freq;
+
     /// <summary>
     /// 构造函数
     /// </summary>
@@ -99,22 +102,24 @@ public class Timer
     /// 毫秒
     /// </summary>
     public double Millisecond => Second * 1000.0;
+
     /// <summary>
     /// 微秒
     /// </summary>
     public double Microsecond => Second * 1000000.0;
+
     /// <summary>
     /// 纳秒
     /// </summary>
     public double Nanosecond => Second * 1000000000.0;
+
     /// <summary>
     /// 计算执行委托的时间
     /// </summary>
     /// <param name="action">要执行的委托</param>
     /// <param name="timeEnum">时间单位</param>
     /// <returns>执行委托的时间</returns>
-    public static double RunTime(Action action,
-        TimeEnum timeEnum = TimeEnum.Millisecond)
+    public static double RunTime(Action action, TimeEnum timeEnum = TimeEnum.Millisecond)
     {
         var nanoSecond = new Timer();
         nanoSecond.Start();
@@ -127,7 +132,7 @@ public class Timer
             TimeEnum.Millisecond => nanoSecond.Millisecond,
             TimeEnum.Microsecond => nanoSecond.Microsecond,
             TimeEnum.Nanosecond => nanoSecond.Nanosecond,
-            _ => 0.0
+            _ => 0.0,
         };
         //string timeNameZn = "";
         //switch (timeEnum)

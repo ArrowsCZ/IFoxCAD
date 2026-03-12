@@ -70,7 +70,7 @@ public class TestMarshal
     [CommandMethod(nameof(Test_Marshal))]
     public void Test_Marshal()
     {
-        var dm = Acap.DocumentManager;
+        var dm = Acaop.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var ed = doc.Editor;
         // 0x01 如何修改Point3d内容?

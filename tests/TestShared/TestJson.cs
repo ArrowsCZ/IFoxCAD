@@ -12,16 +12,11 @@ public class TestJson
     [CommandMethod(nameof(JavaScriptSerializer))]
     public void JavaScriptSerializer()
     {
-        List<int> RegisteredUsers = [];
-        RegisteredUsers.Add(0);
-        RegisteredUsers.Add(1);
-        RegisteredUsers.Add(2);
-        RegisteredUsers.Add(3);
-        
-        var serializedResult = System.Text.Json.JsonSerializer.Serialize(RegisteredUsers);
-        var deserializedResult = System.Text.Json.JsonSerializer.Deserialize<List<int>>(serializedResult);
+        List<int> registeredUsers = [0, 1, 2, 3];
 
-        
-        
+        var serializedResult = System.Text.Json.JsonSerializer.Serialize(registeredUsers);
+        var deserializedResult = System.Text.Json.JsonSerializer.Deserialize<List<int>>(
+            serializedResult
+        );
     }
 }

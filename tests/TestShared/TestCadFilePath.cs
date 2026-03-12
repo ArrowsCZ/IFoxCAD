@@ -1,5 +1,5 @@
 ﻿
-namespace Test;
+namespace IFoxTest;
 
 public class TestCadFilePath
 {
@@ -20,7 +20,7 @@ public class TestCadFilePath
             const string name = "ACAD";
             var str = acadkey?.GetValue(name)?.ToString();
             if (str == null || str.Contains("nihao")) continue;
-            Env.Print(str);
+            str.Print();
             acadkey?.SetValue(name, $@"{str}\nihao;", RegistryValueKind.String);
         }
     }

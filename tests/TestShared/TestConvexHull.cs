@@ -1,4 +1,4 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 
 public class TestConvexHull {
@@ -56,9 +56,9 @@ public class TestConvexHull {
         // var area3 = vec2.DotProduct(vec1);
         // var area4 = vec1.DotProduct(vec2);
 
-        var area5 = GeometryEx.GetArea(new List<Point2d> { new Point2d(0, 0), new Point2d(1, 1), new Point2d(-1, 1) });
+        var area5 = new List<Point2d> { new Point2d(0, 0), new Point2d(1, 1), new Point2d(-1, 1) }.GetArea();
 
-        var area6 = GeometryEx.GetArea(new List<Point2d> { new Point2d(0, 0), new Point2d(-1, 1), new Point2d(1, 1) });
+        var area6 = new List<Point2d> { new Point2d(0, 0), new Point2d(-1, 1), new Point2d(1, 1) }.GetArea();
         // Env.Editor.WriteMessage($"vec1 的法向量= {vec3} \n");
         // Env.Editor.WriteMessage($"vec2 的法向量= {vec4} \n");
 

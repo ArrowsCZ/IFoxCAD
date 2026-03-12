@@ -1,10 +1,10 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 public class TestLisp
 {
     // 定义lisp函数
-    [LispFunction(nameof(LispTest_RunLisp))]
-    public static object LispTest_RunLisp(ResultBuffer rb)
+    [LispFunction(nameof(Test_RunLisp))]
+    public static object Test_RunLisp(ResultBuffer rb)
     {
         CmdTest_RunLisp();
         return null!;
@@ -67,7 +67,7 @@ public class TestLisp
     {
         // 测试方法1: (command "CmdTest_RunLisp1")
         // 测试方式2: (LispTest_RunLisp)
-        var dm = Acap.DocumentManager;
+        var dm = Acaop.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var ed = doc.Editor;
 
@@ -88,10 +88,8 @@ public class TestLisp
         if (flag == EditorEx.RunLispFlag.AdsQueueexpr)
         {
             // 同步
-            Env.Editor.RunLisp("(setq a 10)(princ)",
-                EditorEx.RunLispFlag.AdsQueueexpr);
-            Env.Editor.RunLisp("(princ a)",
-                EditorEx.RunLispFlag.AdsQueueexpr);// 成功输出
+            Env.Editor.RunLisp("(setq a 10)(princ)");
+            Env.Editor.RunLisp("(princ a)");// 成功输出
         }
         else if (flag == EditorEx.RunLispFlag.AcedEvaluateLisp)
         {
@@ -115,8 +113,7 @@ public class TestLisp
             var str = "(setq c 40)(princ)";
             Env.Editor.RunLisp(str,
                 EditorEx.RunLispFlag.SendStringToExecute); // 异步,后发送
-            Env.Editor.RunLisp("(princ c)",
-                EditorEx.RunLispFlag.AdsQueueexpr); // 同步,先发送了,输出是null
+            Env.Editor.RunLisp("(princ c)"); // 同步,先发送了,输出是null
         }
     }
 }

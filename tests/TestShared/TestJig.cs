@@ -1,8 +1,8 @@
-﻿namespace Test;
+﻿namespace IFoxTest;
 
 using System.Windows.Forms;
 
-public class Commands_Jig
+public class CommandsJig
 {
     // 已在数据库的图元如何进入jig
     [CommandMethod(nameof(Test_Jig33))]
@@ -17,7 +17,7 @@ public class Commands_Jig
             return;
         var oldSp = cir.StartPoint;
         JigEx? moveJig = null;
-        moveJig = new JigEx((mousePoint, drawEntitys) => {
+        moveJig = new JigEx((mousePoint, _) => {
             moveJig!.SetOptions(oldSp);// 回调过程中也可以修改基点
             // cir.UpgradeOpen();// 已经提权了,所以这里不需要提权
             cir.Move(cir.StartPoint, mousePoint);
@@ -122,7 +122,7 @@ public class Commands_Jig
     [CommandMethod(nameof(Test_MessageFilter))]
     public void Test_MessageFilter()
     {
-        var dm = Acap.DocumentManager;
+        var dm = Acaop.DocumentManager;
         var ed = dm.MdiActiveDocument.Editor;
 
         // Create and add our message filter
@@ -171,7 +171,7 @@ public class Commands_Jig
     [CommandMethod(nameof(Test_QuickText))]
     static public void Test_QuickText()
     {
-        var dm = Acap.DocumentManager;
+        var dm = Acaop.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;

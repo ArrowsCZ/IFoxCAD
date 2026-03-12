@@ -1,4 +1,4 @@
-﻿/// 系统引用
+﻿// 系统引用
 global using System;
 global using System.Collections;
 global using System.Collections.Generic;
@@ -17,7 +17,7 @@ global using Exception = System.Exception;
 global using Registry = Microsoft.Win32.Registry;
 global using RegistryKey = Microsoft.Win32.RegistryKey;
 
-/// autocad 引用
+// autocad 引用
 global using Autodesk.AutoCAD.ApplicationServices;
 global using Autodesk.AutoCAD.EditorInput;
 global using Autodesk.AutoCAD.Colors;
@@ -43,8 +43,8 @@ global using Cad_DxfFiler = Autodesk.AutoCAD.DatabaseServices.DxfFiler;
 global using Cad_ErrorStatus = Autodesk.AutoCAD.Runtime.ErrorStatus;
 
 
-/// ifoxcad
+// ifoxcad
 global using IFoxCAD.Cad;
 global using IFoxCAD.Basal;
 
-global using Test;
+global using IFoxTest;

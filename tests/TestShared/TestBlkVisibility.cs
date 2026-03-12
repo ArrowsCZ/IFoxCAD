@@ -4,8 +4,8 @@ namespace TestAcad2025;
 
 public static class TestBlkVisibility
 {
-    [CommandMethod(nameof(TestBlkVisibility))]
-    public static void Main()
+    [CommandMethod(nameof(Test_BlkVisibility))]
+    public static void Test_BlkVisibility()
     {
         var r1 = Env.Editor.GetEntity("\n选择块参照");
         if (r1.Status != PromptStatus.OK)
@@ -15,6 +15,7 @@ public static class TestBlkVisibility
             return;
         var info = brf.GetVisibilityInfo();
         MessageBox.Show(
-            $"块{brf.Name}的可见性名字：{info.PropertyName}，参数：{string.Join(", ", info.AllowedValues)}。是否可见？{info.Has}");
+            $"块{brf.Name}的可见性名字：{info.PropertyName}，参数：{string.Join(", ", info.AllowedValues)}。是否可见？{info.Has}"
+        );
     }
 }
